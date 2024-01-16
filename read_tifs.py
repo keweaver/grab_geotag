@@ -3,7 +3,13 @@ import pandas as pd
 import os 
 from osgeo import osr, gdal 
 from read_tif import find_colony
+"""
+given a spreadsheet of annotation .tif files, grab the nearest colony for each 
+and add to the annotations sheet. 
 
+run using: 
+python read_tifs.py
+"""
 colonies = pd.read_csv("./data/colonies.csv")
 annotations = pd.read_excel("./data/annotations.xlsx")
 colonies_col = pd.DataFrame(columns=['file_name', 'colony', 'distance', 'lat', 'lon'])
@@ -22,4 +28,3 @@ for file_name in annotations["file_name"]:
 annotations = annotations.merge(colonies_col, left_on="file_name", right_on="file_name")
 print(annotations)
 annotations.to_csv("./data/annotations_output.csv")
-#"\\vast.whoi.edu\proj\voltaire\mars\projects\emperors_satellite\pgc\imagery"
